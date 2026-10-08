@@ -75,6 +75,6 @@ brand.json controls the business name, logo path and colours. npm run docs creat
 
 ## Verification
 
-npm test uses a temporary database and exercises every command, independent approvals, stale library references, submission holds, immutable history, import mapping, rollback, repeat imports, HTML escaping, documents, drafts and exports. The same suite is configured in GitHub Actions for Windows, Linux and Postgres 16. TEST_DATABASE_URL must point to an empty disposable database. [Research and selection](docs/research.md).
+npm test uses a temporary database and exercises every command, independent approvals, stale library references, submission holds, immutable history, import mapping, rollback, repeat imports, HTML escaping, documents, drafts and exports. The template's GitHub Actions workflow runs the same suite on Windows, Linux and Postgres 17. TEST_DATABASE_URL must point to an empty disposable database. [Research and selection](docs/research.md).
 
 MIT licence. Not affiliated with AutoRFP.ai or Anthropic. Hosting and agent usage have separate costs. [Book 30 minutes with Sam](https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=autorfp&utm_source=github&utm_medium=readme).
