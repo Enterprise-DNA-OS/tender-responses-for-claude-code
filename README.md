@@ -1,115 +1,80 @@
-<h1 align="center">Tender Responses for Claude Code</h1>
+# Tender Responses for Claude Code
 
-<p align="center">
-  <strong>The open-source tender response system that is just a database and Claude Code.</strong>
-</p>
+Know which tender is held, which answer needs a source and who must review it. An MIT-licensed database and command set for proposal teams. Works with Claude Code, Codex, OpenCode or Cursor.
 
-<p align="center">
-  Created by <a href="https://www.enterprisedna.co"><strong>Enterprise DNA</strong></a>. Free and open source. Works with Claude Code, Codex, OpenCode or Cursor.
-</p>
+| Do it yourself | We customise it | We run it for you |
+|---|---|---|
+| Free. Try the demo and import a project backup saved as CSV. | Your response fields, review rules, document formats, history and browser forms or different stack if needed. | Installed, connected and operated through Omni by Enterprise DNA. One setup fee, then a retainer. |
+| [Quick start](#quick-start) | [Get your version built](https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=autorfp&utm_source=github&utm_medium=customise) | [Book a call](https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=autorfp&utm_source=github&utm_medium=managed) |
 
-<!-- three-doors -->
-<table align="center">
-  <tr>
-    <td align="center"><strong>Do it yourself</strong><br/>Clone it, run it, own it. Free, MIT.<br/><a href="#quick-start">Quick start</a></td>
-    <td align="center"><strong>We customise it</strong><br/>Your fields, your rules, your AutoRFP.ai data brought across.<br/><a href="https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=autorfp">Book a call</a></td>
-    <td align="center"><strong>We run it for you</strong><br/>Installed, connected and operated inside Omni. Setup fee, then a retainer.<br/><a href="https://enterprisedna.co/omni/instead-of/autorfp?utm_source=github&utm_medium=readme&utm_campaign=autorfp">How it works</a></td>
-  </tr>
-</table>
+## The Monday tender meeting
 
-<p align="center">
-  <a href="#what-is-this">What is this</a> &bull;
-  <a href="#why-no-front-end">Why no front end</a> &bull;
-  <a href="#quick-start">Quick start</a> &bull;
-  <a href="#the-commands">Commands</a> &bull;
-  <a href="#instead-of-autorfp">Instead of AutoRFP.ai</a> &bull;
-  <a href="#want-it-installed-and-run-for-you">Installed for you</a> &bull;
-  <a href="#license">License</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Node-20+-339933?style=flat-square" alt="Node 20+" />
-  <img src="https://img.shields.io/badge/PostgreSQL-any-336791?style=flat-square" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/PGlite-embedded-3ecf8e?style=flat-square" alt="PGlite" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License" />
-</p>
-
----
-
-## What is this
-
-Tender Responses for Claude Code does the job you pay AutoRFP.ai for, as a Postgres database and a set of agent commands. There is no web front end. You open the folder in [Claude Code](https://claude.com/claude-code) (or Codex, OpenCode, Cursor: see `AGENTS.md`) and ask for what you want in plain language. It runs the right query, and it can answer questions the AutoRFP.ai dashboard cannot.
-
-<!-- TODO(author): the annual bill. One sentence: what a 10 to 50 person business typically pays AutoRFP.ai per year, all in, with a source. -->
-
-Want the same thing with a web front end, or built on a different stack? That is a customisation, and it is exactly what Enterprise DNA does: [book a call](https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=autorfp).
-
-<!-- TODO(author): two or three sentences on what this specific product covers and who it is for. -->
-
-## Why no front end
-
-- The front end was only ever there because the database was hard to talk to. That is no longer true.
-- Your data sits in plain Postgres tables you own. Any tool can read them. No export, no lock-in.
-- No seats, no tiers, no add-ons. Read [docs/why-no-front-end.md](docs/why-no-front-end.md) for the honest trade-offs too.
+Five rituals: decide which bids to pursue, allocate questions, reuse reviewed answers, obtain independent response approval and prepare the submission pack. The fictional Harbour demo contains an overdue questionnaire, an expired continuity answer, an unassigned question and a reference-permission answer awaiting review.
 
 ## Quick start
 
-Sixty seconds, no database install (an embedded Postgres runs inside Node):
+Node 20 or later, on Windows or Linux:
 
 ```bash
 git clone https://github.com/Enterprise-DNA-OS/tender-responses-for-claude-code.git
 cd tender-responses-for-claude-code
 npm install
 npm run demo
+npm test
+npm run view
+npm run docs
 ```
 
-Then open the folder in Claude Code and type a slash command. <!-- TODO(author): name the first command to try. -->
+PGlite stores the local database under .data/db. DATABASE_URL selects Postgres with verified TLS. Local mode supports one process. Start real records in a fresh DATA_DIR with migrate and no seed. Shared business use needs authenticated operators, restricted database roles and tested backups. Actor names are attribution, not authentication.
 
-### Use it with your own Postgres or Supabase
+There are 38 CLI commands including help, and 39 recurring slash recipes including /customise and /new-view. All accept --json. [Arguments and calculations](docs/cli.md). Ambiguous names list candidates and exit 1.
 
-Copy `.env.example` to `.env`, set `DATABASE_URL`, then `npm run migrate`. Same commands, shared data, no per-seat fee.
+## What makes a response ready
 
-## The commands
+An answer needs an evidence reference and approval by someone other than its author. The operator verifies the evidence; the software does not open linked documents. Library text is copied into a bid with its version. Changing the library keeps the bid text intact and flags the old reference for renewed review. Editing a response clears its approval. Import changes clear both approval and evidence references.
 
-<!-- TODO(author): a table of the slash commands in .claude/commands and what each one does. -->
+A bid with missing answers, sources, approvals, current library references or a contact-data review stays held. Ready means ready for human review. Recording submission needs the operator's receipt and closes answer editing. Nothing sends, fills a portal or creates a security certification.
 
-| Command | What it does |
-|---|---|
-| `/...` | ... |
+## Ten questions beyond a fixed report
 
-## Instead of autorfp
+AutoRFP.ai already provides reporting, reviews, content search and an agent connection. These are shipped queries you can change around your own rules, not an unsupported claim that the vendor cannot answer them.
 
-<!-- TODO(author): how to bring data across from AutoRFP.ai; link docs/replace-autorfp.md -->
+1. Which bids depend on an answer whose library review expired? reuse-impact
+2. Who owns the most unfinished responses? workload
+3. Which tender has no questions and must stay held? submission-readiness
+4. Which answers have no supporting source recorded? missing-sources
+5. Which questions are overdue and still unfinished? overdue-questions
+6. Which requirements have no assigned owner? unassigned-questions
+7. Which library records have never received approval? review-queue
+8. What did a response say before the last revision? question
+9. Which bids need a contact-data retention review? compliance
+10. Which tenders copied an older version of a changed library answer? reuse-impact
 
-## Architecture
+## Your first hour: ten things to ask for
 
-```
-tender-responses-for-claude-code/
-  CLAUDE.md                 how the operator wants this run (routing table + house rules)
-  AGENTS.md                 the same, for Codex / OpenCode / Cursor / Gemini CLI
-  .claude/commands/         the slash commands
-  scripts/                  the CLI the commands drive
-  scripts/lib/db.mjs        one adapter: DATABASE_URL (pg) or embedded PGlite
-  supabase/migrations/      plain SQL schema
-  supabase/seed.sql         demo data
-  docs/                     the thesis and the migration guide
-```
+1. Put our name, logo and colours on the response pack.
+2. Show the nearest tender deadlines and what holds them.
+3. Assign the unanswered questions to their real owners.
+4. Show which library reviews are overdue.
+5. Draft a reviewer follow-up and leave it for me to send.
+6. Validate our export headers without saving records.
+7. Import the checked mapping into a fresh bid.
+8. Record the source for one answer and have a colleague review it.
+9. Add our product category with /customise.
+10. Add a weekly owner report with /new-view.
 
-## Built for coding agents
+## Paperwork and views
 
-The database, CLI and command recipes work with Claude Code, Codex, OpenCode or Cursor. Ask your coding agent for a new command and have it implement and test the change against the same records.
+brand.json controls the business name, logo path and colours. npm run docs creates a draft response pack, reviewer brief and privacy review sheet for each applicable bid. npm run view creates the bid room and answer-evidence report. /draft-response and /draft-follow-up create uniquely named private HTML drafts. All reports require human review before sharing.
 
-## Contributing
+[Record checks](docs/compliance.md) distinguish New Zealand privacy reminders from internal tender controls. [Why no front end](docs/why-no-front-end.md) covers mobile, offline and interactive workflows.
 
-Issues and pull requests are welcome. Keep the shape: plain SQL, a small CLI, a slash command per recurring job, no front end.
+## Move from AutoRFP.ai
 
-## Want it installed and run for you?
+[The replacement guide](docs/replace-autorfp.md) covers Excel Backup, saving its question-and-answer sheet as CSV, explicit header mapping, a trial import, repeat-import behaviour and reconciliation. Import is one command after preparing the CSV and registering the bid. No real vendor workbook was available for verification; the fixture is a fictional mapped example. Attachments, approval identities, library connections and the original customer document layout require separate migration work.
 
-Enterprise DNA installs Tender Responses for Claude Code for your business, migrates your AutoRFP.ai data, connects it to the rest of your tools, and runs it for you as part of **Omni**, our managed Command Center. One setup fee, then a monthly retainer.
+## Verification
 
-- Book a call: [enterprisedna.co/omni/book](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=autorfp)
-- Read more: [enterprisedna.co/omni/instead-of/autorfp](https://enterprisedna.co/omni/instead-of/autorfp?utm_source=github&utm_medium=readme&utm_campaign=autorfp)
+npm test uses a temporary database and exercises every command, independent approvals, stale library references, submission holds, immutable history, import mapping, rollback, repeat imports, HTML escaping, documents, drafts and exports. The same suite is configured in GitHub Actions for Windows, Linux and Postgres 16. TEST_DATABASE_URL must point to an empty disposable database. [Research and selection](docs/research.md).
 
-## License
-
-MIT. Copyright (c) 2026 Enterprise DNA.
+MIT licence. Not affiliated with AutoRFP.ai or Anthropic. Hosting and agent usage have separate costs. [Book 30 minutes with Sam](https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=autorfp&utm_source=github&utm_medium=readme).

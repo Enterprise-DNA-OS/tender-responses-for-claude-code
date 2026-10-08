@@ -1,43 +1,57 @@
-# Tender Responses for Claude Code: operating instructions
+# Tender Responses for Claude Code
 
-This file is the brain. Claude Code reads it at the start of every session. It says who this is for, how work gets done, and the one right way to do each recurring job.
+A tender response record system for one business. The demo is a fictional Harbour response team. It runs a bid/no-bid review, allocates questions, reuses reviewed answers, routes responses for independent review and prepares a draft response pack.
 
-## Who this is for
+Every answer starts with the CLI. Never invent a requirement, answer, evidence reference, approval, customer or actor. Read source records before writing. An actor is attribution supplied by the operator, not an authenticated identity. Never manufacture a second identity to pass independent review.
 
-- **Business:** [YOUR BUSINESS]
-- **Operator:** [YOUR NAME], [your role]
-- **What matters most:** [the one or two outcomes you care about]
+Library revisions clear approval and flag affected tender responses without silently changing their text. Import changes clear approval and evidence references. A submitted bid accepts no answer changes. Recorded activity is append-only. Owners can change the database and its triggers, so this is not a tamper-proof archive.
 
-Fill this in once. A worker with context knows. A worker without it guesses.
+Read docs/compliance.md before interpreting a check. Privacy review dates are internal reminders, not statutory retention periods. No claims of ISO or SOC certification. Read docs/replace-autorfp.md before import. Local mode supports one process. Shared use requires authenticated operators, restricted database roles and tested backups. Never expose an owner database connection to a browser.
 
-## How to work
+## Recurring jobs
 
-1. **Take a brief, not a script.** The operator describes the outcome. You run the right command and present the answer.
-2. **Read before you write.** Before drafting anything about a record, read its full history first.
-3. **Plain language.** Short sentences. No filler. Numbers in tables.
-4. **Silent success, loud problems.** No play-by-play. Say what broke and what you did about it.
-5. **Stop at the line.** Anything that sends, deletes, or faces a customer waits for a yes in this session.
-
-## Routing table: one right way for each recurring job
-
-| When the operator asks for... | Use this |
+| Job | Recipe |
 |---|---|
-| <!-- TODO(author): one row per slash command --> | `/...` |
+| List the bid register, customers, owners and deadlines | /bids |
+| Review open bids before committing the team | /bid-triage |
+| Read the requirements and response state | /requirements |
+| Review the reusable answer library | /library |
+| Review expired or unapproved library answers | /review-queue |
+| Chase responses that are unanswered, unsupported or unapproved | /response-queue |
+| Check what holds each bid before submission | /submission-readiness |
+| Allocate unfinished questions by owner | /workload |
+| Find tenders affected by changed or expired library answers | /reuse-impact |
+| Find answers without supporting sources | /missing-sources |
+| Find late unfinished questions | /overdue-questions |
+| Assign questions that have no owner | /unassigned-questions |
+| Review late bids, late responses and library reviews | /attention |
+| Review privacy reminders and internal evidence checks | /compliance |
+| Read the change history | /activity |
+| Read one bid and its complete question list | /bid |
+| Read a response and its recorded revisions | /question |
+| Read a library answer and its recorded revisions | /entry |
+| Search library text before drafting an answer | /search |
+| Prepare the Monday bid review from triage, attention and workload | /weekly-review |
+| Register a bid with a deadline and contact-data review | /add-bid |
+| Add a requirement to an open bid | /add-question |
+| Assign a question and an internal deadline | /assign |
+| Write a sourced answer and clear its previous approval | /answer |
+| Record independent review of the current response | /approve-answer |
+| Add a sourced draft answer to the library | /add-entry |
+| Revise a library answer and clear its approval | /revise-entry |
+| Record independent review of a current library version | /approve-entry |
+| Copy a current approved library answer for local bid review | /use-library |
+| Record the purpose and next review for bid contact data | /review-data |
+| Record a submission that a person has already made | /record-submission |
+| Record an award, loss or no-bid decision | /record-outcome |
+| Record a bid decision or note | /log |
+| Draft a tender response pack for human review | /draft-response |
+| Draft a reviewer follow-up without sending | /draft-follow-up |
+| Import an AutoRFP.ai backup saved as CSV | /import |
+| Export all records and history to private JSON | /export |
+| Change fields, rules and documents | /customise |
+| Add a read-only report | /new-view |
 
-If an ask fits nothing here, run the CLI directly (`npm run <cli> -- --help`) and then propose a new command for it.
+Use scripts/tenders.mjs, with --json for machines. All runtimes share .claude/commands/. Ambiguous names list candidates and exit 1. Never send, submit to portals, delete, publish or call vendor systems. Drafts stay in drafts/.
 
-## Hard rules
-
-- Never send email or messages from here. Draft to `drafts/`, a person sends.
-- Never delete records without an explicit yes in this session. Prefer marking closed or archived.
-- Never invent a record. If a name is ambiguous, list the candidates and ask.
-- The database is the source of truth. If the answer is not in it, say so.
-
-## Where things live
-
-- `scripts/` the CLI. `scripts/lib/db.mjs` picks `DATABASE_URL` (Postgres, Supabase) or the embedded database in `.data/`.
-- `supabase/migrations/` the schema, plain SQL. `npm run migrate` applies it.
-- `.claude/commands/` the slash commands. Add one every time the same ask comes twice.
-- `docs/` the thesis and the guide for moving off AutoRFP.ai.
-
-Built by Enterprise DNA. Installed and run for you as part of Omni: https://enterprisedna.co/omni/instead-of/autorfp
+Omni by Enterprise DNA installs, customises and runs this system. https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=autorfp&utm_source=github&utm_medium=instructions

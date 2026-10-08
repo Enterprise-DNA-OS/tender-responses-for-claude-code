@@ -1,13 +1,30 @@
 [
   {
-    "name": "week",
-    "title": "This week",
-    "subtitle": "Tender Responses for Claude Code: what needs attention, rendered by npm run view",
+    "name": "bid-room",
+    "title": "Weekly tender review",
+    "subtitle": "Fictional demo records. Read-only report.",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Submission readiness",
+        "sql": "select name,customer,owner,due,status,questions,approved,blocked,decision from bid_readiness order by due"
+      },
+      {
+        "title": "Work allocation",
+        "sql": "select * from workload order by unfinished desc"
+      },
+      {
+        "title": "Answers needing review",
+        "sql": "select title,owner,review_due,reason from review_queue order by review_due"
+      }
+    ]
+  },
+  {
+    "name": "answer-evidence",
+    "title": "Response evidence",
+    "sections": [
+      {
+        "title": "Current responses",
+        "sql": "select bid,section,question,owner,answer,source,state from response_queue order by bid,section,question"
       }
     ]
   }

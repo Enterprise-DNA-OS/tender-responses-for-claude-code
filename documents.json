@@ -1,11 +1,44 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
+    "name": "response-pack",
+    "title": "DRAFT tender response pack",
+    "for_each": "select id,name from bids order by name",
     "file": "name",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Readiness",
+        "sql": "select name,customer,due,status,decision from bid_readiness where id=$1",
+        "note": "Human review required. This is not a customer-format submission or evidence that anything was sent."
+      },
+      {
+        "title": "Responses and evidence",
+        "sql": "select section,question,answer,source,approved_by,state from response_queue where bid_id=$1 order by section,question"
+      }
+    ]
+  },
+  {
+    "name": "reviewer-brief",
+    "title": "DRAFT reviewer brief",
+    "for_each": "select id,name from bids where status='open' order by name",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Outstanding responses",
+        "sql": "select section,question,owner,due,state from response_queue where bid_id=$1 and state<>'approved' order by due"
+      }
+    ]
+  },
+  {
+    "name": "privacy-review",
+    "title": "Contact-data retention review",
+    "for_each": "select id,name from bids order by name",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Recorded purpose and next review",
+        "sql": "select name,customer,retention_note,privacy_review_due from bids where id=$1",
+        "note": "Check lawful purpose, disclosure permissions and source records. This reminder is not a compliance certificate."
+      }
     ]
   }
 ]
